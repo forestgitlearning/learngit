@@ -59,6 +59,7 @@ git学习笔记：
 			也可以使用下面的命令还原：
 				git restore --staged filename
 				git restore filename
+			修改工作区文件后，执行git rm filename会报错
 
 4，远程仓库
 	1）添加远程仓库
