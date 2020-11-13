@@ -1,0 +1,65 @@
+git学习笔记：
+1，安装git
+	1）设置userid和mail
+		git config --global user.name "your git"
+		git config --global user.mail "email@126.com"
+
+2，创建版本库
+	mkdir learngit	//创建目录
+	cd learngit
+	pwd	//显示当前目录
+	git init	//把当前目录变成git管理的仓库
+	ls	//查看当前目录下面有哪些文件和文件夹，.git文件夹不可见(.git文件夹是版本库)
+	ls -ltr	//查看当前目录下面有哪些文件和文件夹，.git文件夹不可见
+	dir	//查看当前目录下面有哪些文件和文件夹，.git文件夹不可见
+	dir -ltr	//查看当前目录下面有哪些文件和文件夹，.git文件夹不可见
+	ls -ah	//可以查看到.git文件夹
+	git add filename	//把filename文件添加到仓库，准确的说是仓库的暂存区
+	git add filename1 filename2 filename3	//一次添加多个文件
+	git commit -m "modify reason"	//把所有文件提交到仓库（当前分支），只提交暂存区文件，
+									//工作区在add到暂存区之后的修改，不会提交到仓库，需要再次add再次commit才会提交到仓库
+	git status	//仓库当前状态
+
+3，版本管理
+	1）版本回退
+		git log	//查看历史记录
+		git log --pretty=oneline	//查看历史记录，比git log的显示信息要简洁
+		git reset --hard head^	//回退到上个版本
+		git reset --hard head^^	//回退到上上个版本
+		git reset --hard head~100	//回退到上100个版本
+		git reset --hard commitID	//回退到往前或者往后某个版本，commitID只需要前几位，git log里面可以找到
+		git reflog	//查看命令历史，reflog是用来记录每一次的命令
+	2）工作区与暂存区
+		工作区：你在电脑里面能看到git仓库的目录，比如上面新建的learngit仓库，电脑上看到的learngit文件夹目录就是工作区
+		暂存区：stage/index
+				git add命令是将文件修改添加到暂存区
+				git commit命令是把暂存区所有内容一次性提交到仓库的当前分支
+	3）管理修改
+		(1)正确的文件提价流程；
+				第一次修改 -> git add -> 第二次修改 -> git add -> git commit
+		(2)每一次修改后，都需要用git add命令把工作区的修改添加到暂存区，然后再git commit，
+			如果修改后没有git add，则修改只存在于工作区，git commit只会把暂存区的修改提交到当前仓库分支
+	4）撤销修改
+		(1)丢弃工作区修改
+			git checkout -- filename	//丢弃工作区修改
+										//两种情况：第一种是文件自修改后还没有放到暂存区，现在，撤销修改就回到和版本库一模一样的状态
+										//			第二种是文件修改后已经放到暂存区，现在，撤销修改就回到添加到暂存区后的状态
+		(2)丢弃暂存区修改
+			git reset HEAD filename	//丢弃暂存区修改
+			再次使用git checkout -- filename命令，可以丢弃工作区修改
+	5）删除文件
+		(1)rm filename	//删除工作区文件
+		(2)删除版本库文件
+			git rm filename
+			git commit -m "delete note"
+			手动删除工作区文件，然后使用git rm <file> 和git add <file>效果是一样的
+		(3)恢复工作区误删的文件
+			git checkout -- filename	//git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是删除还是修改，都可以“一键还原”
+		(4)直接使用git rm filename删除文件，会将版本库和工作区的文件都删掉，可以使用git commit彻底删掉，
+			也可以使用下面的命令还原：
+				git restore --staged filename
+				git restore filename
+
+4，远程仓库
+	1）添加远程仓库
+		
