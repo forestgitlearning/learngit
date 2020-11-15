@@ -1,6 +1,6 @@
 git学习笔记：
 1，安装git
-	1）设置userid和mail
+	1)设置userid和mail
 		git config --global user.name "your git"
 		git config --global user.mail "email@126.com"
 
@@ -16,12 +16,12 @@ git学习笔记：
 	ls -ah	//可以查看到.git文件夹
 	git add filename	//把filename文件添加到仓库，准确的说是仓库的暂存区
 	git add filename1 filename2 filename3	//一次添加多个文件
-	git commit -m "modify reason"	//把所有文件提交到仓库（当前分支），只提交暂存区文件，
+	git commit -m "modify reason"	//把所有文件提交到仓库（当前分支)，只提交暂存区文件，
 									//工作区在add到暂存区之后的修改，不会提交到仓库，需要再次add再次commit才会提交到仓库
 	git status	//仓库当前状态
 
 3，版本管理
-	1）版本回退
+	1)版本回退
 		git log	//查看历史记录
 		git log --pretty=oneline	//查看历史记录，比git log的显示信息要简洁
 		git reset --hard head^	//回退到上个版本
@@ -29,17 +29,17 @@ git学习笔记：
 		git reset --hard head~100	//回退到上100个版本
 		git reset --hard commitID	//回退到往前或者往后某个版本，commitID只需要前几位，git log里面可以找到
 		git reflog	//查看命令历史，reflog是用来记录每一次的命令
-	2）工作区与暂存区
+	2)工作区与暂存区
 		工作区：你在电脑里面能看到git仓库的目录，比如上面新建的learngit仓库，电脑上看到的learngit文件夹目录就是工作区
 		暂存区：stage/index
 				git add命令是将文件修改添加到暂存区
 				git commit命令是把暂存区所有内容一次性提交到仓库的当前分支
-	3）管理修改
+	3)管理修改
 		(1)正确的文件提价流程；
 				第一次修改 -> git add -> 第二次修改 -> git add -> git commit
 		(2)每一次修改后，都需要用git add命令把工作区的修改添加到暂存区，然后再git commit，
 			如果修改后没有git add，则修改只存在于工作区，git commit只会把暂存区的修改提交到当前仓库分支
-	4）撤销修改
+	4)撤销修改
 		(1)丢弃工作区修改
 			git checkout -- filename	//丢弃工作区修改
 										//两种情况：第一种是文件自修改后还没有放到暂存区，现在，撤销修改就回到和版本库一模一样的状态
@@ -47,7 +47,7 @@ git学习笔记：
 		(2)丢弃暂存区修改
 			git reset HEAD filename	//丢弃暂存区修改
 			再次使用git checkout -- filename命令，可以丢弃工作区修改
-	5）删除文件
+	5)删除文件
 		(1)rm filename	//删除工作区文件
 		(2)删除版本库文件
 			git rm filename
@@ -62,5 +62,27 @@ git学习笔记：
 			修改工作区文件后，执行git rm filename会报错
 
 4，远程仓库
-	1）添加远程仓库
-		
+	1)github账号
+		(1)打开https://github.com，注册账号
+			<1>打开github网站慢，需要做一些操作
+				打开C:\Windows\System32\drivers\etc\host，在里面添加
+					# GitHub Start 
+					140.82.114.4 github.com
+					199.232.69.194 github.global.ssl.fastly.net
+					# GitHub End
+		(2)设置SSHKeys
+			<1>打开git bash，输入命令ssh-keygen -t rsa -C"forest1004@foxmail.com"，3次回车键，会生成id_rsa和id_rsa.pub两个文件
+			<2>输入命令ssh -T git@github.com ，如果出现“You've successfully authenticated, but GitHub does not provide shell access.”，则创建成功
+			<3>打开https://github.com/，登录github，右上角Setting -> SSH and GPG keys -> New SSH key
+				title任意填，然后把id_rsa.pub的文件内容填写到key文本框，id_rsa.pub文件的地址在git bash里面有
+	2)添加远程仓库
+		(1)创建仓库
+			注意，git上免费托管的git仓库，是任何人都可以看到的，但是只有自己才能修改
+			https://github.com 右上角，选择new repository，Repository name里面填写仓库名，其他保持默认，点击Create Repository
+		(2)关联本地仓库与github上的仓库
+			在git bash运行git remote add origin git@github.com:forestgitlearning/learngit.git
+		(3)本地库内容推送到远程
+			在git bash运行git push -u origin master，由于远程库是空的，所有第一次推送到master时，加了参数-u，git不但会把本地的master内容推送到远程的
+			新分支master，还会把两者关联起来，以后推送或拉取的时候可以简化命令
+		(4)推送修改内容到github
+			git push origin master
