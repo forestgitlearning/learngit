@@ -29,6 +29,9 @@ git学习笔记：
 		git reset --hard head~100	//回退到上100个版本
 		git reset --hard commitID	//回退到往前或者往后某个版本，commitID只需要前几位，git log里面可以找到
 		git reflog	//查看命令历史，reflog是用来记录每一次的命令
+		git diff filename	//比较工作区与暂存区
+		git diff HEAD filename	//比较工作区与版本库
+		git diff --cached filename	//比较暂存区与版本库
 	2)工作区与暂存区
 		工作区：你在电脑里面能看到git仓库的目录，比如上面新建的learngit仓库，电脑上看到的learngit文件夹目录就是工作区
 		暂存区：stage/index
